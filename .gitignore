@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Excel fuente — documento interno, no hace falta publicarlo en el repo.
+Programas que se pueden ofertar en el departamento de Caldas y Manizales*.xlsx
+~$*.xlsx

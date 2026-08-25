@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Qué técnico quieres estudiar? — Manizales rural</title>
+<meta name="description" content="Cuéntanos qué programa técnico profesional te gustaría estudiar. Comité de Cafeteros de Caldas — La Universidad en el Campo.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/formulario.css">
+</head>
+<body>
+
+<!-- Sprite SVG de íconos, sin librería externa -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icono-hoja" viewBox="0 0 24 24"><path d="M5 21c0-9 6-15 15-15 0 9-6 15-15 15Z"/><path d="M5 21c3-4 6-7 15-15"/></symbol>
+  <symbol id="icono-escudo" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="icono-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+  <symbol id="icono-engranaje" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l1.9-1.5-2-3.4-2.3.7a7.6 7.6 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.3a7.6 7.6 0 0 0-2.6 1.5l-2.3-.7-2 3.4L4.6 10.5a7.6 7.6 0 0 0 0 3L2.7 15l2 3.4 2.3-.7c.75.66 1.63 1.17 2.6 1.5l.4 2.3h4l.4-2.3a7.6 7.6 0 0 0 2.6-1.5l2.3.7 2-3.4-1.9-1.5Z"/></symbol>
+  <symbol id="icono-maletin" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></symbol>
+  <symbol id="icono-plato" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></symbol>
+  <symbol id="icono-usuario" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></symbol>
+  <symbol id="icono-escuela" viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></symbol>
+  <symbol id="icono-reloj" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="icono-check" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></symbol>
+  <symbol id="icono-equis" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="icono-alerta" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+</svg>
+
+<div class="fondo-decorativo" aria-hidden="true">
+  <span class="mancha mancha-1"></span>
+  <span class="mancha mancha-2"></span>
+  <span class="mancha mancha-3"></span>
+</div>
+
+<!-- ═══ Pantalla: ya respondió (localStorage) ═══ -->
+<main id="pantallaYaRespondio" class="pantalla-centrada oculto">
+  <div class="tarjeta-mensaje">
+    <svg class="icono-svg icono-grande" style="color:var(--teal-600)"><use href="#icono-check"/></svg>
+    <h1>¡Ya registramos tu respuesta!</h1>
+    <p>Gracias por contarnos qué te gustaría estudiar. Si crees que esto es un error, contacta a tu institución educativa.</p>
+  </div>
+</main>
+
+<!-- ═══ Formulario completo, en una sola página ═══ -->
+<div id="app" class="app">
+
+  <header class="cabecera">
+    <div class="cabecera-marca">
+      <svg class="icono-svg"><use href="#icono-escuela"/></svg>
+      <span>Comité de Cafeteros de Caldas</span>
+    </div>
+    <h1 class="cabecera-titulo">¿Qué técnico te gustaría estudiar? 🎓</h1>
+    <p class="cabecera-sub">La Universidad en el Campo llega a tu institución. Cuéntanos quién eres, explora los programas técnicos y marca tu top 3.</p>
+  </header>
+
+  <!-- ─── Datos del estudiante ─── -->
+  <section class="tarjeta-paso">
+    <h2><span class="numero-seccion">1</span> Tus datos</h2>
+    <div class="campo">
+      <label for="inputNombre">Nombres y apellidos completos</label>
+      <input type="text" id="inputNombre" autocomplete="name" placeholder="Ej: Juan Esteban Pérez Gómez" maxlength="80">
+      <p class="campo-error oculto" id="errorNombre"></p>
+    </div>
+    <div class="campo">
+      <label for="selectInstitucion">Tu institución educativa</label>
+      <select id="selectInstitucion">
+        <option value="" selected disabled>Selecciona tu institución…</option>
+      </select>
+      <p class="campo-error oculto" id="errorInstitucion"></p>
+    </div>
+    <p id="saludoInstitucion" class="saludo-institucion oculto"></p>
+
+    <div id="avisoDuplicado" class="aviso-duplicado oculto">
+      <svg class="icono-svg"><use href="#icono-alerta"/></svg>
+      <div>
+        <p id="avisoDuplicadoTexto"></p>
+        <div class="aviso-duplicado-botones">
+          <button type="button" class="btn btn-fantasma" id="btnEsMio">Ya respondí, es mío</button>
+          <button type="button" class="btn btn-secundario" id="btnSoyOtro">No, soy otra persona</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Elegir programas ─── -->
+  <section class="tarjeta-paso">
+    <h2><span class="numero-seccion">2</span> Elige tus programas</h2>
+    <p class="seccion-ayuda">Toca una tarjeta para ver el detalle y marcarla como tu 1ra, 2da o 3ra opción.</p>
+
+    <div class="filtros-area" id="filtrosArea"></div>
+    <div class="galeria" id="galeriaProgramas"></div>
+  </section>
+
+  <!-- ─── Pantalla de éxito ─── -->
+  <section class="tarjeta-paso tarjeta-exito oculto" id="pasoExito">
+    <div class="confeti" aria-hidden="true"></div>
+    <svg class="icono-svg icono-grande" style="color:var(--exito)"><use href="#icono-check"/></svg>
+    <h2>¡Listo, <span id="exitoNombre"></span>! 🎉</h2>
+    <p>Ya registramos tu interés. Gracias por ayudarnos a llevar más oportunidades técnicas a tu institución.</p>
+    <div class="resumen-podio" id="exitoPodio"></div>
+  </section>
+
+</div>
+
+<!-- ─── Barra flotante: top 3 + enviar (siempre visible mientras se llena el formulario) ─── -->
+<div class="podio-flotante" id="podioFlotante">
+  <div class="podio-titulo">Tu top 3 <span class="podio-contador" id="podioContador">0/3</span></div>
+  <div class="podio-slots" id="podioSlots"></div>
+  <p id="errorEnvio" class="error-envio oculto"></p>
+  <button type="button" class="btn btn-primario btn-grande" id="btnEnviar">
+    <span id="btnEnviarTexto">Enviar mis respuestas</span>
+  </button>
+</div>
+
+<!-- ─── Modal de detalle de programa ─── -->
+<div class="modal-fondo oculto" id="modalFondo">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <button type="button" class="modal-cerrar" id="modalCerrar" aria-label="Cerrar">
+      <svg class="icono-svg"><use href="#icono-equis"/></svg>
+    </button>
+    <div class="modal-chip" id="modalChipArea"></div>
+    <h2 class="modal-titulo" id="modalTitulo"></h2>
+    <div class="modal-horas">
+      <svg class="icono-svg"><use href="#icono-reloj"/></svg>
+      <span id="modalHoras"></span>
+    </div>
+    <h3 class="modal-subtitulo">Perfil profesional</h3>
+    <ul class="modal-perfil" id="modalPerfil"></ul>
+    <div class="modal-botones">
+      <button type="button" class="btn-opcion btn-opcion-1" data-opcion="1">🥇 Es mi 1ra opción</button>
+      <button type="button" class="btn-opcion btn-opcion-2" data-opcion="2">🥈 Es mi 2da opción</button>
+      <button type="button" class="btn-opcion btn-opcion-3" data-opcion="3">🥉 Es mi 3ra opción</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/texto.js"></script>
+<script src="js/catalogo.js"></script>
+<script src="js/formulario.js"></script>
+</body>
+</html>

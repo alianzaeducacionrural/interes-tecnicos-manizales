@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel — Interés en técnicos profesionales</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icono-refrescar" viewBox="0 0 24 24"><path d="M20 11A8 8 0 1 0 18.5 16"/><path d="M20 5v6h-6"/></symbol>
+  <symbol id="icono-descargar" viewBox="0 0 24 24"><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/><path d="M4 21h16"/></symbol>
+  <symbol id="icono-alerta" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="icono-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="icono-usuarios" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><circle cx="18" cy="9" r="2.8"/><path d="M15.7 13.7c2.6.4 4.8 2.7 4.8 5.6"/></symbol>
+  <symbol id="icono-escuela" viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></symbol>
+  <symbol id="icono-corona" viewBox="0 0 24 24"><path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8Z"/></symbol>
+  <symbol id="icono-lista" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
+</svg>
+
+<div class="admin-shell">
+
+  <header class="admin-header">
+    <div class="admin-header-titulo">
+      <svg class="icono-svg"><use href="#icono-escuela"/></svg>
+      <div>
+        <h1>Interés en técnicos profesionales</h1>
+        <p>Manizales rural — panel de resultados</p>
+      </div>
+    </div>
+    <div class="admin-header-acciones">
+      <span id="panelActualizado" class="admin-actualizado"></span>
+      <button type="button" class="btn btn-secundario" id="btnActualizar"><svg class="icono-svg"><use href="#icono-refrescar"/></svg> Actualizar</button>
+      <button type="button" class="btn btn-primario" id="btnDescargarCsv"><svg class="icono-svg"><use href="#icono-descargar"/></svg> Exportar CSV</button>
+    </div>
+  </header>
+
+  <div id="panelCargando" class="admin-estado">
+    <div class="spinner"></div>
+    <p>Cargando respuestas…</p>
+  </div>
+
+  <div id="panelError" class="admin-estado oculto">
+    <svg class="icono-svg icono-grande" style="color:var(--peligro)"><use href="#icono-alerta"/></svg>
+    <p id="panelErrorMensaje">No se pudo cargar la información.</p>
+    <button type="button" class="btn btn-secundario" id="btnReintentar">Reintentar</button>
+  </div>
+
+  <main id="panelContenido" class="oculto">
+
+    <!-- KPIs -->
+    <section class="kpi-grid">
+      <div class="kpi-tarjeta">
+        <span class="kpi-etiqueta">Total de respuestas</span>
+        <span class="kpi-valor" id="kpiTotal">—</span>
+      </div>
+      <div class="kpi-tarjeta">
+        <span class="kpi-etiqueta">Estudiantes únicos</span>
+        <span class="kpi-valor" id="kpiUnicos">—</span>
+      </div>
+      <div class="kpi-tarjeta">
+        <span class="kpi-etiqueta">Instituciones participando</span>
+        <span class="kpi-valor" id="kpiInstituciones">—</span>
+      </div>
+      <div class="kpi-tarjeta kpi-destacada">
+        <span class="kpi-etiqueta"><svg class="icono-svg"><use href="#icono-corona"/></svg> Programa más votado</span>
+        <span class="kpi-valor kpi-valor-texto" id="kpiTop">—</span>
+      </div>
+    </section>
+
+    <!-- Ranking + semáforo -->
+    <section class="admin-grid-2">
+      <div class="admin-tarjeta">
+        <h2>Ranking de programas</h2>
+        <p class="admin-tarjeta-nota">Puntaje ponderado: 1ra opción = 3 pts · 2da = 2 pts · 3ra = 1 pt</p>
+        <div id="graficoRanking" class="lista-barras"></div>
+      </div>
+
+      <div class="admin-tarjeta">
+        <div class="admin-tarjeta-header">
+          <h2>Semáforo de viabilidad</h2>
+          <label class="umbral-control">
+            Cupo mínimo
+            <input type="number" id="inputUmbral" value="25" min="1" step="1">
+          </label>
+        </div>
+        <p class="admin-tarjeta-nota">Según cuántos estudiantes lo pusieron de 1ra opción.</p>
+        <div id="listaSemaforo" class="lista-semaforo"></div>
+      </div>
+    </section>
+
+    <!-- Cobertura por institución -->
+    <section class="admin-tarjeta">
+      <h2>Cobertura por institución</h2>
+      <p class="admin-tarjeta-nota">Respuestas recibidas de cada institución educativa.</p>
+      <div id="graficoInstituciones" class="lista-barras"></div>
+    </section>
+
+    <!-- Matriz programa x institución -->
+    <section class="admin-tarjeta">
+      <h2>Matriz de interés: programa × institución</h2>
+      <p class="admin-tarjeta-nota">Cuenta las 3 opciones de cada estudiante (no solo la 1ra) — dónde abrir cada cohorte.</p>
+      <div class="matriz-scroll">
+        <table class="tabla-matriz" id="tablaMatriz"></table>
+      </div>
+    </section>
+
+    <!-- Tabla de respuestas -->
+    <section class="admin-tarjeta">
+      <div class="admin-tarjeta-header">
+        <h2>Todas las respuestas</h2>
+        <span id="notaTabla" class="admin-tarjeta-nota"></span>
+      </div>
+      <div class="filtros-tabla">
+        <div class="campo-busqueda">
+          <svg class="icono-svg"><use href="#icono-lupa"/></svg>
+          <input type="text" id="filtroTexto" placeholder="Buscar por nombre…">
+        </div>
+        <select id="filtroInstitucion">
+          <option value="">Todas las instituciones</option>
+        </select>
+      </div>
+      <div class="tabla-scroll">
+        <table class="tabla-respuestas">
+          <thead>
+            <tr>
+              <th data-orden="estudiante">Estudiante</th>
+              <th data-orden="institucion">Institución</th>
+              <th>1ra opción</th>
+              <th>2da opción</th>
+              <th>3ra opción</th>
+              <th data-orden="fechaTiempo">Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="tablaRespuestasBody"></tbody>
+        </table>
+      </div>
+      <p id="tablaVacia" class="tabla-vacia oculto">No hay respuestas que coincidan con el filtro.</p>
+    </section>
+
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/catalogo.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
