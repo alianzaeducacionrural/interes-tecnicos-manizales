@@ -13,6 +13,7 @@ const ICONO_AREA = {
   industria: 'icono-engranaje',
   administracion: 'icono-maletin',
   'alimentos-turismo': 'icono-plato',
+  'arte-cultura': 'icono-mascara',
 };
 
 const MEDALLAS = ['🥇', '🥈', '🥉'];

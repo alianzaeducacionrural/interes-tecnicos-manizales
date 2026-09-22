@@ -2,13 +2,23 @@
 // CATÁLOGO — programas técnicos e instituciones educativas
 // ================================================
 // Transcrito a mano desde "Programas que se pueden ofertar en el
-// departamento de Caldas y Manizales (1).xlsx" (hoja única, filas 6-28).
+// departamento de Caldas y Manizales (1).xlsx" (hoja única, filas 6-34).
 // Solo quedan los programas ofertables en Manizales: columna E dice
-// "Manizales", "Manizales y área metropolitana" o "Cualquier municipio",
-// más los 4 programas de la Universidad de Caldas (que según el equipo
-// también se pueden ofertar en Manizales aunque el Excel no lo liste ahí).
+// "Manizales", "Manizales y área metropolitana", "Manizales - Chinchiná -
+// Palestina" o "Cualquier municipio", más 4 programas de la Universidad de
+// Caldas cuyo Excel no menciona Manizales en el municipio pero que según el
+// equipo también se pueden ofertar ahí (proyectos agropecuarios, producción
+// agrícola, saneamiento ambiental, producción cafetera).
 // La columna "Universidad" del Excel se omite a propósito: el formulario
 // muestra el programa técnico, nunca quién lo dicta.
+//
+// El área "Arte y Cultura" se agregó junto con "Expresión Artística,
+// Corporal y Vocal para la Escena" (actualización del Excel de 2026-09):
+// ningún área existente describía un programa escénico, así que se sumó
+// el color/ícono `arte-cultura` en css/tokens.css, index.html e
+// ICONO_AREA (js/formulario.js). "Procesamiento Agroindustrial" se
+// clasificó en `agro` (junto a los otros programas de la Universidad de
+// Caldas) en vez de `alimentos-turismo`, por decisión del equipo.
 //
 // Cada `perfil` es el texto crudo del Excel (limpio de saltos de línea y
 // typos), con las frases separadas por ";" — js/formulario.js las separa en
@@ -26,6 +36,7 @@ const AREAS = [
   { id: 'industria', nombre: 'Industria y Manufactura', icono: 'engranaje' },
   { id: 'administracion', nombre: 'Administración y Negocios', icono: 'maletin' },
   { id: 'alimentos-turismo', nombre: 'Alimentos y Turismo', icono: 'plato' },
+  { id: 'arte-cultura', nombre: 'Arte y Cultura', icono: 'mascara' },
 ];
 
 const PROGRAMAS = [
@@ -52,6 +63,14 @@ const PROGRAMAS = [
     horas: 8,
     perfil: 'Capacitado y especializado en el sector cafetero; formación vinculada con las realidades productivas del territorio; desarrollo de competencias para el desempeño laboral; articulación en ciclos propedéuticos; continuidad hacia la Tecnología en Gestión de Empresa Cafetera; relación explícita con la permanencia de los jóvenes en sus territorios rurales.',
     municipios: 'Aguadas, Pácora, Salamina, Aránzazu, Filadelfia, Neira, Villamaría, Palestina, Chinchiná, Risaralda, Anserma, Belalcázar, Viterbo, San José, Supía, Riosucio, Marmato, La Merced, Manzanares, Marquetalia, Pensilvania, Samaná, Victoria y Marulanda (Caldas)',
+  },
+  {
+    id: 'procesamiento-agroindustrial',
+    nombre: 'Técnico Profesional en Procesamiento Agroindustrial',
+    area: 'agro',
+    horas: 12,
+    perfil: 'Capacitado para realizar control, seguimiento y ejecución de procesos con enfoque práctico aplicando procedimientos definidos y comunes en distintas actividades de la producción agroindustrial, desde la producción primaria hasta la transformación y comercialización de productos alimentarios y no alimentarios; aprovechar subproductos propendiendo por procesos productivos sostenibles; aplicar parámetros de calidad e inocuidad en el marco de la normatividad.',
+    municipios: 'Manizales, Chinchiná y Palestina',
   },
   {
     id: 'gestion-comercial-agropecuario',
@@ -84,6 +103,30 @@ const PROGRAMAS = [
     horas: 8,
     perfil: null,
     municipios: 'Manizales, Marmato, Riosucio, Chinchiná, Anserma, Aguadas, Manzanares y Pensilvania',
+  },
+  {
+    id: 'programacion-web',
+    nombre: 'Técnico Profesional en Programación Web',
+    area: 'tecnologia',
+    horas: 12,
+    perfil: 'Capacitado para crear y desarrollar aplicaciones web utilizando lenguajes como CSS, JavaScript y PHP, entre otros; comunicar ideas de manera clara y efectiva y colaborar en equipo para encontrar soluciones; comprender y aplicar la estructura y arquitectura de las aplicaciones web; resolver problemas técnicos de manera eficiente; mantenerse actualizado con las últimas tendencias y avances en el campo de la programación web.',
+    municipios: 'Manizales, Chinchiná y Palestina',
+  },
+  {
+    id: 'programacion-dispositivos-moviles',
+    nombre: 'Técnico Profesional en Programación para Dispositivos Móviles',
+    area: 'tecnologia',
+    horas: 12,
+    perfil: 'Capacitado para diseñar y desarrollar aplicaciones móviles utilizando lenguajes y tecnología especializada; comunicarse de manera efectiva y colaborar en equipo para crear soluciones innovadoras; comprender la estructura y arquitectura de las aplicaciones móviles aplicando habilidades avanzadas para resolver problemas técnicos; mantenerse al día con las últimas tendencias y avances en el desarrollo de tecnologías móviles.',
+    municipios: 'Manizales, Chinchiná y Palestina',
+  },
+  {
+    id: 'programacion-videojuegos',
+    nombre: 'Técnico Profesional en Programación para Videojuegos',
+    area: 'tecnologia',
+    horas: 12,
+    perfil: 'Capacitado para diseñar y desarrollar videojuegos utilizando lenguajes de programación y herramientas como Unity y otras tecnologías especializadas; comunicar ideas de manera efectiva y colaborar en equipo para crear soluciones innovadoras; comprender la estructura y arquitectura de los videojuegos aplicando habilidades para resolver problemas técnicos específicos; mantenerse actualizado con las últimas tendencias y avances en la tecnología de desarrollo de videojuegos.',
+    municipios: 'Manizales, Chinchiná y Palestina',
   },
   {
     id: 'internet-de-las-cosas',
@@ -134,6 +177,14 @@ const PROGRAMAS = [
     municipios: 'Manizales',
   },
   {
+    id: 'redes-electricas',
+    nombre: 'Técnico Profesional en Instalaciones de Redes Eléctricas de Baja y Media Tensión',
+    area: 'industria',
+    horas: 12,
+    perfil: 'Capacitado en la instalación y mantenimiento de sistemas de energía de media y baja tensión; habilidades técnicas para operar, mantener y diseñar sistemas eléctricos; responsable, ético y comunicativo; capaz de contribuir al desarrollo e implementación de soluciones eléctricas.',
+    municipios: 'Manizales, Chinchiná y Palestina',
+  },
+  {
     id: 'procesos-contables-financieros',
     nombre: 'Técnico Profesional en Procesos Contables y Financieros',
     area: 'administracion',
@@ -172,6 +223,14 @@ const PROGRAMAS = [
     horas: 8,
     perfil: 'Capacidades para desarrollar procesos operativos que dinamicen la actividad económica en empresas prestadoras de servicios turísticos; operar servicios turísticos a partir del potencial de los destinos, sus manifestaciones culturales, recursos naturales y patrimonio; formular proyectos que promuevan el desarrollo turístico y la conservación del ambiente, los bienes y los valores culturales.',
     municipios: 'Aguadas, Anserma, Belalcázar, Chinchiná, Filadelfia, La Merced, Manizales, Neira, Pácora, Palestina, Riosucio, Salamina, San José, Risaralda, Supía, Villamaría, Viterbo y microcredenciales en el resto del departamento',
+  },
+  {
+    id: 'expresion-artistica-escena',
+    nombre: 'Técnico Profesional en Expresión Artística, Corporal y Vocal para la Escena',
+    area: 'arte-cultura',
+    horas: 12,
+    perfil: 'Capacitado en el uso expresivo y efectivo del cuerpo y la voz en diversos contextos escénicos; crear e interpretar personajes, transmitir emociones y resolver problemas teatrales de manera creativa; trabajar de forma colaborativa, adaptarse a diferentes roles y comunicarse con claridad; integrar conocimientos teóricos del teatro y la producción; ejercer autoevaluación crítica y responsabilidad ética en el ámbito teatral.',
+    municipios: 'Manizales, Chinchiná y Palestina',
   },
 ];
 

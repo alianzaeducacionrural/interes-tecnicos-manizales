@@ -1,7 +1,7 @@
 # CLAUDE.md — Interés en técnicos profesionales (Manizales rural)
 
 Encuesta para las 13 instituciones educativas rurales de Manizales: cada
-estudiante elige su top 3 de programas técnicos profesionales entre los 18
+estudiante elige su top 3 de programas técnicos profesionales entre los 24
 que se pueden ofertar en el municipio (filtrados del Excel de "Programas que
 se pueden ofertar en el departamento de Caldas y Manizales"). El objetivo es
 un dato accionable — cuántos estudiantes pondrían cada programa de primera
@@ -21,7 +21,7 @@ css/formulario.css
 css/dashboard.css
 js/config.js             CONFIG.GAS_URL + CONFIG.ADMIN_TOKEN
 js/texto.js              nombrePropio() — normalización de nombres
-js/catalogo.js           los 18 programas + las 13 instituciones (dato estático)
+js/catalogo.js           los 24 programas + las 13 instituciones (dato estático)
 js/formulario.js         lógica del formulario público
 js/dashboard.js          lógica del panel de administrador
 gas/Code.gs              backend Apps Script
